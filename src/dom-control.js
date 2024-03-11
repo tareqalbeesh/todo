@@ -103,26 +103,24 @@ const domController = (function () {
 
 
     }
-
+    addTodoDialogFun()
 
     function changeProject(projectId) {
         currProject = projectId
         renderProjectSelected()
-        addTodoDialogFun()
-
     }
     function renderProjectSelected() {
         console.log('changed project', todoLogic.projects[currProject])
         // comps.mainPage.innerText = todoLogic.projects[currProject].name
-        let h1 = document.createElement('h1')
-        comps.mainPage.innerHTML = ''
+        let h1 = document.querySelector('#title')
+
         h1.innerText = todoLogic.projects[currProject].name
-        comps.mainPage.appendChild(h1)
+
 
 
         //render tasks
-        let todoItems = document.createElement('div')
-        todoItems.id = 'todo-items'
+        let todoItems = document.querySelector('#todo-items')
+        todoItems.innerHTML = ''
 
         let i = 0
         todoLogic.projects[currProject].todos.forEach((todo) => {
@@ -154,20 +152,17 @@ const domController = (function () {
 
             todoItems.appendChild(todoItem)
         })
-        comps.mainPage.appendChild(todoItems)
+        // comps.mainPage.appendChild(todoItems)
         // renderThisTask(0)
 
 
 
 
         //render add menthod
-        let addDiv = document.createElement('div')
-        addDiv.id = 'add-todo'
-        let iconSpan = document.createElement('span')
-        iconSpan.classList = ["material-symbols-outlined"]
-        iconSpan.innerText = 'add_circle'
-        addDiv.appendChild(iconSpan)
-        comps.mainPage.appendChild(addDiv)
+        // let addDiv = document.querySelector('#add-todo')
+
+        // addDiv.appendChild(iconSpan)
+        // comps.mainPage.appendChild(addDiv)
 
 
     }
