@@ -1,0 +1,131 @@
+html {
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+
+}
+
+body {
+    display: grid;
+    grid-template-columns: 150px 4fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+
+}
+
+.left-menu {
+    background-color: #70798C;
+
+
+}
+
+#main-page {
+    background-color: #F5F1ED;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-list-item {
+    color: white;
+    padding: 10px 10px 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.left-list-item:hover {
+    background-color: #606675;
+}
+
+
+.left-list-item>span {
+    color: #DAD2BC;
+    font-weight: 600;
+    padding-right: 10px;
+}
+
+#projects-section-header {
+    color: white;
+    padding: 0px 10px 10px 10px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+#projects-section-header>span {
+    color: white;
+    font-weight: 400;
+    padding-right: 10px;
+}
+
+#add-project {
+    color: white;
+    text-align: center;
+    font-size: 0.7rem;
+}
+
+
+.project {
+    color: white;
+    align-items: center;
+}
+
+
+#main-page>h1 {
+    color: #70798C;
+    padding-left: 40px;
+
+}
+
+#todo-date {
+    margin-left: 0;
+}
+
+#todo-items {
+    width: 400px;
+
+}
+
+.todo-item {
+    display: flex;
+    margin: 10px 20px 0px 20px;
+    gap: 10px;
+    background-color: #DAD2BC;
+    border: 1px solid white;
+    border-radius: 15px;
+    padding: 10px;
+
+
+}
+
+.todo-text {
+    width: 100%;
+}
+
+#todo-date {
+    width: max-content;
+}
+
+.todo-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.todo-description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 1.1em;
+
+}
+
+#add-todo {
+    display: flex;
+    color: #A99985;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 30px;
+
+}

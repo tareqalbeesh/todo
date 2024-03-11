@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="left-menu">
+        <div id="inbox" class="left-list-item"><span class="material-symbols-outlined">
+                inbox
+            </span> inbox</div>
+
+        <div id="today" class="left-list-item">
+            <span class="material-symbols-outlined">
+                today
+            </span>
+            today
+        </div>
+        <div id="next-7-days" class="left-list-item"><span class="material-symbols-outlined">
+                date_range
+            </span>next 7 days</div>
+
+        <hr>
+        <div id="projects-section">
+
+            <div id="projects-section-header">
+                <span class="material-symbols-outlined">
+                    list
+                </span>Your Projects
+            </div>
+            <ul id="project-list">
+            </ul>
+        </div>
+        <div id="add-project">
+            <span class="material-symbols-outlined">
+                add_circle
+            </span>
+        </div>
+        <dialog id="add-project-dialog">
+            <form method="dialog">
+                <p>
+                    <label>
+                        Project Name:
+                        <input type="text" id="add-project-dialog-name-input" required>
+                    </label>
+                </p>
+                <input type="submit" id="add-project-dialog-submit-btn" value="Submit">
+                <input type="submit" id="add-project-dialog-close" value="close">
+            </form>
+        </dialog>
+
+
+    </div>
+    <div id="main-page">
+        <h1>Project1</h1>
+        <div id="todo-items">
+            <div class="todo-item">
+                <input type="checkbox" id="todo-checkbox">
+                <div class="todo-text">
+                    <div class="todo-title">Title1</div>
+                    <div class="todo-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta alias,
+                        eos
+                        ullam sint, quos odio dolorem dolore ut exercitationem consequuntur architecto tempora, est
+                        dolor
+                        dolorum voluptatum praesentium officia. Eaque, pariatur?</div>
+                </div>
+                <span id="todo-date">November. 4</span>
+            </div>
+
+        </div>
+
+        <div id="add-todo"><span class="material-symbols-outlined">
+                add_circle
+            </span></div>
+
+
+
+
+    </div>
+
+    <dialog id="add-todo-dialog">
+        <form method="dialog">
+            <p>
+                <label>
+                    Title:
+                    <input type="text" id="add-todo-dialog-title-input" required>
+                </label>
+            </p>
+            <p>
+                <label>
+                    Description:
+                    <input type="text" id="add-todo-dialog-description-input" required>
+                </label>
+            </p>
+            <select name="" id="add-todo-dialog-priority-select" required>
+                <option value="low">low</option>
+                <option value="medium">medium</option>
+                <option value="high">high</option>
+            </select>
+            <label>
+                due date:
+                <input type="date" id="add-todo-dialog-date">
+            </label>
+
+            <input type="submit" id="add-todo-dialog-submit-btn" value="Submit">
+            <input type="submit" id="add-todo-dialog-close" value="close">
+        </form>
+    </dialog>
+    <script src="main.js"></script>
+</body>
+
+</html>
