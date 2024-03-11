@@ -20,6 +20,7 @@ const domController = (function () {
 
         const inbox = document.querySelector("#inbox")
         const today = document.querySelector("#today")
+        const next7Days = document.querySelector('#next-7-days')
 
         //main stuff 
         const mainPage = document.querySelector('#main-page')
@@ -29,7 +30,10 @@ const domController = (function () {
         inbox.addEventListener('click', () => { changeProject(0) })
 
         today.addEventListener('click', () => {
-            console.log(todoLogic.giveMeAllTasksToday())
+            renederToday()
+        })
+        next7Days.addEventListener('click', () => {
+            render7Days()
         })
 
         addProjectBtn.addEventListener('click', () => {
@@ -109,27 +113,51 @@ const domController = (function () {
         currProject = projectId
         renderProjectSelected()
     }
+    function renederToday() {
+        let h1 = document.querySelector('#title')
+        h1.innerText = "Today"
+        //render tasks
+        renderTasks(todoLogic.giveMeAllTasksToday())
+    }
+    function render7Days() {
+        let h1 = document.querySelector('#title')
+        h1.innerText = "Next 7 Days"
+        //render tasks
+        renderTasks(todoLogic.giveMeAllTasksNext7Days())
+    }
     function renderProjectSelected() {
         console.log('changed project', todoLogic.projects[currProject])
-        // comps.mainPage.innerText = todoLogic.projects[currProject].name
         let h1 = document.querySelector('#title')
-
         h1.innerText = todoLogic.projects[currProject].name
 
 
 
         //render tasks
+        renderTasks(todoLogic.projects[currProject].todos)
+
+
+    }
+    function renderTasks(todos) {
         let todoItems = document.querySelector('#todo-items')
         todoItems.innerHTML = ''
-
-        let i = 0
-        todoLogic.projects[currProject].todos.forEach((todo) => {
+        todos = todos.sort((a, b) => {
+            const priorityOrder = { 'low': 0, 'medium': 1, 'high': 2 };
+            return priorityOrder[a.priority] - priorityOrder[b.priority];
+        });
+        todos.forEach((todo) => {
             let todoItem = document.createElement('div')
             todoItem.classList = ['todo-item']
-            todoItem.id = 'todo-' + i
+
             let checkbox = document.createElement('input')
             checkbox.type = 'checkbox'
-            checkbox.id = 'todo-checkbox-' + i
+
+            checkbox.checked = todo.done;
+            checkbox.addEventListener('change', () => {
+                todo.switchStatus();
+                //rerender the page so the checked items are 
+
+                renderProjectSelected()
+            })
             let todoTextDiv = document.createElement('div')
             todoTextDiv.classList = ['todo-text']
 
@@ -143,26 +171,30 @@ const domController = (function () {
 
             todoDescriptionDiv.innerText = todo.description
             let dateSpan = document.createElement('span')
-            dateSpan.id = 'todo-date-' + i
+
             dateSpan.innerText = format(todo.dueDate, "P");
 
             todoItem.appendChild(checkbox)
             todoItem.appendChild(todoTextDiv)
             todoItem.appendChild(dateSpan)
+            switch (todo.priority) {
+                case todoLogic.Priority.LOW:
+                    todoItem.style.borderBottom = "5px solid green"
+                    break;
+                case todoLogic.Priority.MEDIUM:
+                    todoItem.style.borderBottom = "5px solid orange"
+                    break;
+                case todoLogic.Priority.HIGH:
+                    todoItem.style.borderBottom = "5px solid red"
+                    break;
+            }
 
-            todoItems.appendChild(todoItem)
+            if (todo.done)
+                todoItems.appendChild(todoItem)
+            else
+                todoItems.insertBefore(todoItem, todoItems.firstChild)
+
         })
-        // comps.mainPage.appendChild(todoItems)
-        // renderThisTask(0)
-
-
-
-
-        //render add menthod
-        // let addDiv = document.querySelector('#add-todo')
-
-        // addDiv.appendChild(iconSpan)
-        // comps.mainPage.appendChild(addDiv)
 
 
     }
@@ -176,6 +208,11 @@ const domController = (function () {
         let checkbox = document.createElement('input')
         checkbox.type = 'checkbox'
         checkbox.id = 'todo-checkbox-' + i
+        checkbox.addEventListener('change', () => {
+            todo.switchStatus();
+            //rerender the page so the checked items are 
+            renderProjectSelected()
+        })
         let todoTextDiv = document.createElement('div')
         todoTextDiv.classList = ['todo-text']
 
@@ -195,8 +232,18 @@ const domController = (function () {
         todoItem.appendChild(checkbox)
         todoItem.appendChild(todoTextDiv)
         todoItem.appendChild(dateSpan)
-
-        todoItems.appendChild(todoItem)
+        switch (todo.priority) {
+            case todoLogic.Priority.LOW:
+                todoItem.style.borderBottom = "5px solid green"
+                break;
+            case todoLogic.Priority.MEDIUM:
+                todoItem.style.borderBottom = "5px solid orange"
+                break;
+            case todoLogic.Priority.HIGH:
+                todoItem.style.borderBottom = "5px solid red"
+                break;
+        }
+        todoItems.insertBefore(todoItem, todoItems.firstChild)
 
     }
 

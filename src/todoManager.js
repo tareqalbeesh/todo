@@ -4,7 +4,11 @@ const todoLogic = (function () {
     const Priority = { LOW: "low", MEDIUM: 'medium', HIGH: 'high' }
 
     function TODO(title, description, dueDate, priority, project) {
-        this.title = title, this.description = description, this.dueDate = new Date(), this.priority = Object.values(Priority).includes(priority) ? priority : Priority.MEDIUM, this.project = project, this.done = false
+        dueDate = new Date(dueDate)
+        console.log(!isNaN(dueDate))
+        this.title = title, this.description = description, this.dueDate = isNaN(dueDate) ? new Date() : dueDate, this.priority = Object.values(Priority).includes(priority) ? priority : Priority.MEDIUM, this.project = project, this.done = false, this.switchStatus = function () {
+            this.done = !this.done
+        }
     }
     function Project(name) {
         this.name = name,
@@ -36,14 +40,33 @@ const todoLogic = (function () {
         return returnTodos
     }
 
+    function giveMeAllTasksNext7Days() {
+        let returnTodos = []
+        projects.forEach((project) => {
+            project.todos.forEach((todo) => {
+                let today = new Date()
+
+                const timeDifference = todo.dueDate.getTime() - today.getTime();
+                const daysDifference = Math.round(timeDifference / (1000 * 60 * 60 * 24));
+                console.log(daysDifference)
+
+                const isWithinNext7Days = daysDifference >= 0 && daysDifference <= 7;
+                if (isWithinNext7Days) {
+                    returnTodos.push(todo)
+                }
+            })
+        })
+        return returnTodos
+    }
+
 
     //the default TODOs Project
     const inboxTODOs = new Project('inbox')
-    let testTODO = new TODO('Title1', 'Description', 'duedate', undefined, inboxTODOs)
+    let testTODO = new TODO('Title1', 'Description', new Date(), undefined, inboxTODOs)
     inboxTODOs.todos = [testTODO]
     const projects = [inboxTODOs]
 
-    return { projects, Project, TODO, addProject, addTodo, giveMeAllTasksToday }
+    return { projects, Project, TODO, Priority, addProject, addTodo, giveMeAllTasksToday, giveMeAllTasksNext7Days }
 
 })();
 

@@ -64,8 +64,13 @@ body {
     color: white;
     text-align: center;
     font-size: 0.7rem;
+    user-select: none;
 }
 
+#add-project:hover {
+    color: #DAD2BC;
+
+}
 
 .project {
     color: white;
@@ -127,5 +132,17 @@ body {
     font-size: 1.3rem;
     font-weight: 700;
     padding: 30px;
+    user-select: none;
+
+}
+
+#add-todo:hover {
+    color: black;
+
+}
+
+/* all checked todos automatically get the line-through text  */
+input[type="checkbox"]:checked+* {
+    text-decoration: line-through;
 
 }
