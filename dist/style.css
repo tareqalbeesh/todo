@@ -136,6 +136,14 @@ body {
 
 }
 
+.project {
+    user-select: none;
+}
+
+.left-list-item {
+    user-select: none;
+}
+
 #add-todo:hover {
     color: black;
 
@@ -146,3 +154,38 @@ input[type="checkbox"]:checked+* {
     text-decoration: line-through;
 
 }
+
+select {
+    height: min-content;
+}
+
+option {
+    padding: 5px 10px 5px 10px;
+}
+
+/* option[value='low'] {
+    background-color: green;
+    color: white;
+}
+
+option[value='medium'] {
+    background-color: orange;
+    color: white;
+}
+
+option[value='high'] {
+    background-color: red;
+    color: white;
+}
+
+.custom-select {
+    width: 200px;
+}
+
+select {
+    padding: 20px;
+}
+
+select * {
+    padding: 20px;
+} */

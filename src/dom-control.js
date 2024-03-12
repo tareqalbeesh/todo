@@ -76,7 +76,6 @@ const domController = (function () {
         const addTodoDialogDueDate = document.querySelector("#add-todo-dialog-date")
 
 
-
         addTodoBtn.addEventListener('click', () => {
             addTodoDialog.showModal()
         })
@@ -138,6 +137,7 @@ const domController = (function () {
 
     }
     function renderTasks(todos) {
+        console.log('renderTasks', todos)
         let todoItems = document.querySelector('#todo-items')
         todoItems.innerHTML = ''
         todos = todos.sort((a, b) => {
@@ -150,13 +150,16 @@ const domController = (function () {
 
             let checkbox = document.createElement('input')
             checkbox.type = 'checkbox'
+            console.log('todo.done', todo.done, todo.done == true)
 
-            checkbox.checked = todo.done;
+            checkbox.checked = todo.done ? true : false;
             checkbox.addEventListener('change', () => {
                 todo.switchStatus();
-                //rerender the page so the checked items are 
+                //rerender the page so the checked items are sorted below the not finished tasks
 
                 renderProjectSelected()
+                todoLogic.saveState()
+
             })
             let todoTextDiv = document.createElement('div')
             todoTextDiv.classList = ['todo-text']
@@ -212,6 +215,7 @@ const domController = (function () {
             todo.switchStatus();
             //rerender the page so the checked items are 
             renderProjectSelected()
+            todoLogic.saveState()
         })
         let todoTextDiv = document.createElement('div')
         todoTextDiv.classList = ['todo-text']
@@ -244,6 +248,7 @@ const domController = (function () {
                 break;
         }
         todoItems.insertBefore(todoItem, todoItems.firstChild)
+        renderProjectSelected()
 
     }
 

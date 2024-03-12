@@ -99,11 +99,14 @@
                     <input type="text" id="add-todo-dialog-description-input" required>
                 </label>
             </p>
-            <select name="" id="add-todo-dialog-priority-select" required>
-                <option value="low">low</option>
-                <option value="medium">medium</option>
-                <option value="high">high</option>
-            </select>
+            <div class="custom-select">
+                <select name="" id="add-todo-dialog-priority-select" multiple required>
+                    <option value="low">low</option>
+                    <option value="medium">medium</option>
+                    <option value="high">high</option>
+                </select>
+            </div>
+            <br>
             <label>
                 due date:
                 <input type="date" id="add-todo-dialog-date">

@@ -1,22 +1,68 @@
 import { domController } from './dom-control.js'
+import { storageTasks } from './storage.js';
+const Priority = { LOW: "low", MEDIUM: 'medium', HIGH: 'high' }
+
+class TODO {
+    constructor(title, description, dueDate, priority, project) {
+        dueDate = new Date(dueDate);
+        console.log(!isNaN(dueDate));
+        this.title = title;
+        this.description = description;
+        this.dueDate = isNaN(dueDate) ? new Date() : dueDate;
+        this.priority = Object.values(Priority).includes(priority) ? priority : Priority.MEDIUM;
+        this.project = project;
+        this.done = false;
+    }
+    static fromJSON = function (json, project) {
+        let todo = new TODO(json.title, json.description, new Date(json.dueDate), json.priority, project);
+        todo.done = json.done
+        return todo
+
+    };
+    toJSON() {
+        return {
+            title: this.title,
+            description: this.description,
+            dueDate: this.dueDate,
+            priority: this.priority,
+            project: this.project.name,
+            done: this.done
+        };
+    };
+
+    switchStatus() {
+        this.done = !this.done;
+
+    };
+}
+
+class Project {
+    constructor(name) {
+        this.name = name,
+            this.todos = [];
+    }
+    toJSON() {
+        return {
+            name: this.name,
+            todos: this.todos.map(todo => todo.toJSON())
+        };
+    };
+    static fromJSON(json) {
+        const project = new Project(json.name);
+        project.todos = json.todos.map(todoJson => TODO.fromJSON(todoJson, project));
+        return project;
+    };
+
+}
 
 const todoLogic = (function () {
-    const Priority = { LOW: "low", MEDIUM: 'medium', HIGH: 'high' }
 
-    function TODO(title, description, dueDate, priority, project) {
-        dueDate = new Date(dueDate)
-        console.log(!isNaN(dueDate))
-        this.title = title, this.description = description, this.dueDate = isNaN(dueDate) ? new Date() : dueDate, this.priority = Object.values(Priority).includes(priority) ? priority : Priority.MEDIUM, this.project = project, this.done = false, this.switchStatus = function () {
-            this.done = !this.done
-        }
-    }
-    function Project(name) {
-        this.name = name,
-            this.todos = []
-    }
+
+
     function addProject(projectName) {
         projects.push(new Project(projectName))
         domController.addProjectDOM(projectName)
+        storageTasks.saveState(projects)
     }
     function addTodo(title, description, dueDate, priority, projectId) {
 
@@ -24,6 +70,7 @@ const todoLogic = (function () {
 
         projects[projectId].todos.push(todo)
         domController.renderThisTask(projects[projectId].todos.length - 1)
+        storageTasks.saveState(projects)
     }
 
     //items from projects are added to the new array and passed by reference
@@ -58,18 +105,32 @@ const todoLogic = (function () {
         })
         return returnTodos
     }
+    let projects = []
+    function init() {
+
+        projects = storageTasks.readAllProjectsFromStorage()
+        console.log('projects are read at init form storage', projects)
+
+    }
+    function renderProjectsList() {
+        projects.forEach((project) => {
+            if (project.name != 'inbox') {
+                domController.addProjectDOM(project.name)
+            }
+        })
+    }
+    function saveState() {
+        console.log('project that are saved', projects)
+        storageTasks.saveState(projects)
+    }
+    init()
 
 
-    //the default TODOs Project
-    const inboxTODOs = new Project('inbox')
-    let testTODO = new TODO('Title1', 'Description', new Date(), undefined, inboxTODOs)
-    inboxTODOs.todos = [testTODO]
-    const projects = [inboxTODOs]
-
-    return { projects, Project, TODO, Priority, addProject, addTodo, giveMeAllTasksToday, giveMeAllTasksNext7Days }
+    return { projects, Project, TODO, Priority, addProject, addTodo, giveMeAllTasksToday, giveMeAllTasksNext7Days, renderProjectsList, saveState }
 
 })();
 
 domController.changeProject(0)
+todoLogic.renderProjectsList()
 
-export { todoLogic }
+export { todoLogic, TODO, Project, Priority }
