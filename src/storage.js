@@ -7,7 +7,7 @@ const storageTasks = (function () {
         if (projectsFromStorage == null) {
             const inboxTODOs = new Project('inbox')
             let task1 = new TODO('Buy Milk', 'Buy milk from Netto', new Date(), Priority.LOW, inboxTODOs)
-            let task2 = new TODO('Add Read.me File', 'a good idea would be to stop procrastination and just do it', new Date(), undefined, inboxTODOs)
+            let task2 = new TODO('Add Read.me File', 'add a cool read.me ', new Date(), undefined, inboxTODOs)
             let task3 = new TODO('Add editing the tasks functionality', 'another day of dealing with html dialogs', new Date(), Priority.HIGH, inboxTODOs)
             inboxTODOs.todos = [task1, task2, task3]
             projects.push(inboxTODOs)
