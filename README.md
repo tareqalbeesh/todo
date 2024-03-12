@@ -22,7 +22,7 @@ This is a simple todo application built using vanilla JavaScript, HTML, and CSS.
 
 ## Installation
 1. Clone the repository: `git clone git@github.com:tareqalbeesh/todo.git`
-2. Navigate to the project directory: `cd todo-app`
+2. Navigate to the project directory: `cd todo`
 3. Install dependencies: `npm install`
 4. Build the project: `npm run build`
 
